@@ -19,11 +19,6 @@ EdgeKey create_edge_key(int cluster1, int cluster2)
     return EdgeKey(cluster1, cluster2);
 }
 
-// Edge::Edge (int cluster1, int cluster2)
-//     : edge_key(create_edge_key(cluster1, cluster2))
-//     , distance(0.0f)
-// {}
-
 Edge::Edge (const EdgeKey& edge_key_)
     : edge_key(edge_key_)
     , distance(0.0f)

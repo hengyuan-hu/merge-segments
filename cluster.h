@@ -24,7 +24,7 @@ class ClusterPool
 public:
     ClusterPool (int num_clusters);
     int get_next_index ();
-    void set_invalid(int index);
+    void set_invalid (int index);
     bool is_valid (int index) const;
 
     int next_index;

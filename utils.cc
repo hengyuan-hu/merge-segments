@@ -7,7 +7,6 @@
 using namespace std;
 using cv::Vec3b;
 using cv::Mat;
-// using std::vector;
 
 bool all_assigned (const IndexCluster& index_cluster, int& r, int& c)
 {
@@ -64,7 +63,6 @@ IndexCluster convert_color_cluster_to_index_cluster (const string& cc_name, int*
     while (!all_assigned(index_cluster, nar, nac)) {
         assign_cluster(nar, nac, seg_image, next_cluster, index_cluster);
         next_cluster++;
-        // cout << next_cluster << endl;
     }
     *num_clusters = next_cluster;
     return index_cluster;
@@ -123,12 +121,6 @@ void save_cluster_graph (const string& file_name, const IndexCluster& index_clus
     for (int r = 0; r < rows; ++r) {
         graph.at<Vec3b>(r,0) = Vec3b(255, 255, 255);
         for (int c = 1; c < cols; ++c) {
-
-            // if (r == 593 && c == 705) {
-            //     cout << "(593, 704): " << index_cluster[r][c-1] << endl;
-            //     cout << "(593, 705): " << index_cluster[r][c] << endl;
-            // }
-
             if (index_cluster[r][c] == index_cluster[r][c-1]) {
                 graph.at<Vec3b>(r,c) = Vec3b(255, 255, 255);
             } else {

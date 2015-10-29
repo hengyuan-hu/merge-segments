@@ -145,8 +145,6 @@ void merge_cluster (ClusterPool& cluster_pool,
 
     assert(key_edges.erase(shortest_edge->edge_key) == 1);
 
-    // cout << "hit" << endl;
-
     const int new_index = cluster_pool.get_next_index();
     Cluster* new_cluster = new Cluster(new_index);
     new_cluster->add_pixel(cluster1->pixels);
@@ -157,19 +155,15 @@ void merge_cluster (ClusterPool& cluster_pool,
     for (int i = 0; i < new_cluster->pixels.size(); ++i) {
         const Pixel<int>& p = new_cluster->pixels[i];
         assert(index_cluster[p.r][p.c] != new_index);
-        // cout << "changing: " << p.r << ", " << p.c << ", "
-        //      << index_cluster[p.r][p.c] << "->" << new_index << endl;
         index_cluster[p.r][p.c] = new_index;
     }
 
     // handle neighbors
     auto nbr1 = cluster1->nbr_indices.begin();
     auto nbr2 = cluster2->nbr_indices.begin();
-    // cout << "hit1" << endl;
     while (nbr1 != cluster1->nbr_indices.end() || nbr2 != cluster2->nbr_indices.end()) {
         Edge* new_edge = 0;
         if (nbr1 == cluster1->nbr_indices.end() || nbr2 == cluster2->nbr_indices.end() || *nbr1 != *nbr2) {
-            // cout << "hit 3.1 start" << endl;
             int nbr = -1;
             int old_part_index = -1;
             assert(nbr1 != cluster1->nbr_indices.end() || nbr2 != cluster2->nbr_indices.end());
@@ -193,8 +187,6 @@ void merge_cluster (ClusterPool& cluster_pool,
                 assert(false);
             }
 
-            // cout << "hit 3.1" << endl;
-
             EdgeKey old_edge_key = create_edge_key(old_part_index, nbr);
             if (old_edge_key == shortest_edge->edge_key) {
                 continue;
@@ -204,13 +196,10 @@ void merge_cluster (ClusterPool& cluster_pool,
             change_nbr_index(nbr, old_part_index, new_index, id_clusters);
             new_edge = merge_edge(create_edge_key(new_index, nbr), &old_edge_key, 1, key_edges, index_cluster, angle_graph);
         } else {
-            // cout << "hit 3.2 start" << endl;
             // *nbr1 == *nbr2, i.e. shared neighbor
             new_cluster->nbr_indices.insert(*nbr1);
             change_nbr_index(*nbr1, cluster_index1, new_index, id_clusters);
             change_nbr_index(*nbr2, cluster_index2, new_index, id_clusters);
-
-            // cout << "hit 3.2" << endl;
 
             EdgeKey old_edge_keys[2] = { create_edge_key(*nbr1, cluster_index1), create_edge_key(*nbr2, cluster_index2) };
             new_edge = merge_edge(create_edge_key(new_index, *nbr1), old_edge_keys, 2, key_edges, index_cluster, angle_graph);

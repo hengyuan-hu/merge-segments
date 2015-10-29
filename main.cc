@@ -54,10 +54,7 @@ int main ()
     int i = 0;
     while (edge_queue.size()) {
         i++;
-        // cout << i++ << endl;
-        // cout << "before: " << index_clusters[593][704] << endl;
         merge_cluster(cluster_pool, edge_queue, key_edges, id_clusters, index_clusters, angle_graph);
-        // cout << "after: " << index_clusters[593][704] << endl;
 
         if (i % 5000 == 0) {
             string file_name = "result_pic_test/"+to_string(i)+"_merge.jpg";
