@@ -26,10 +26,10 @@ bool all_assigned (const IndexCluster& index_cluster, int& r, int& c)
 void assign_cluster (int r, int c, const Mat& seg_image, int index, IndexCluster& index_cluster)
 {
     assert(index >= 0);
-
-    static const int num_dirs = 4;
-    static const int dr[num_dirs] = {-1, 0, 0, 1};
-    static const int dc[num_dirs] = {0, -1, 1, 0};
+    // cout << r << ", " << c << endl;
+    static const int num_dirs = 8;
+    static const int dr[num_dirs] = {-1, -1, -1,  0, 0,  1, 1, 1};
+    static const int dc[num_dirs] = {-1,  0,  1, -1, 1, -1, 0, 1};
     const int& rows = seg_image.rows;
     const int& cols = seg_image.cols;
     const cv::Vec3b& center_color = seg_image.at<cv::Vec3b>(r,c);

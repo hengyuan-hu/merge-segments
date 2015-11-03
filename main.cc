@@ -33,14 +33,14 @@ int main ()
     // const string angle_file_name = "test_angle.txt";
     AngleGraph angle_graph = load_angle_graph(angle_file_name);
 
-    // int num_clusters;
-    // IndexCluster index_clusters = convert_color_cluster_to_index_cluster(seg_name, &num_clusters);
-    // cout << "number of clusters: " << num_clusters << endl;
-    // save_index_cluster(seg_name+"_index.txt", index_clusters);
+    int num_clusters;
+    IndexCluster index_clusters = convert_color_cluster_to_index_cluster(seg_name, &num_clusters);
+    cout << "number of clusters: " << num_clusters << endl;
+    save_index_cluster(seg_name+"_index_8_dir.txt", index_clusters);
 
-    IndexCluster index_clusters = load_index_cluster(seg_name+"_index.txt");
+    // IndexCluster index_clusters = load_index_cluster(seg_name+"_index.txt");
 
-    save_cluster_graph(seg_name+"_original.jpg", index_clusters);
+    save_cluster_graph(seg_name+"_original_8_dir.jpg", index_clusters);
 
     unordered_map<int, Cluster*> id_clusters = construct_clusters (index_clusters);
     ClusterPool cluster_pool(id_clusters.size());
@@ -57,7 +57,7 @@ int main ()
         merge_cluster(cluster_pool, edge_queue, key_edges, id_clusters, index_clusters, angle_graph);
 
         if (i % 5000 == 0) {
-            string file_name = "result_pic_test/"+to_string(i)+"_merge.jpg";
+            string file_name = "result_pic_test_8_dir/"+to_string(i)+"_merge.jpg";
             save_cluster_graph(file_name, index_clusters);
         }
         if (i % 1000 == 0) {
