@@ -53,16 +53,14 @@ int main ()
 
     int i = 0;
     while (edge_queue.size()) {
-        i++;
-        merge_cluster(cluster_pool, edge_queue, key_edges, id_clusters, index_clusters, angle_graph);
-
-        if (i % 5000 == 0) {
-            string file_name = "result_pic_test_8_dir/"+to_string(i)+"_merge.jpg";
-            save_cluster_graph(file_name, index_clusters);
-        }
-        if (i % 1000 == 0) {
-            cout << "iter: " << i << endl;
-            cout << "num cluster left: " << cluster_pool.num_valid_index << endl;
+        if(merge_cluster(cluster_pool, edge_queue, key_edges, id_clusters, index_clusters, angle_graph)) {
+            i += 1;
+            if (i % 20 == 0) {
+                string file_name = "result_pic/"+to_string(i)+"_merge.jpg";
+                save_cluster_graph(file_name, index_clusters);
+                cout << "iter: " << i << endl;
+                cout << "num cluster left: " << cluster_pool.num_valid_index << endl;
+            }
         }
         // print_edge_queue(edge_queue, cluster_pool);
         // print_matrix<int>(index_clusters);

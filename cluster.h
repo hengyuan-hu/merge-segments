@@ -34,7 +34,7 @@ public:
 
 std::unordered_map<int, Cluster*> construct_clusters (const IndexCluster& index_cluster);
 
-void merge_cluster (ClusterPool& cluster_pool, EdgeQueue& edge_queue, KeyEdgeMap& key_edges,
+bool merge_cluster (ClusterPool& cluster_pool, EdgeQueue& edge_queue, KeyEdgeMap& key_edges,
                     std::unordered_map<int, Cluster*>& id_clusters, IndexCluster& index_cluster,
                     const AngleGraph& angle_graph);
 

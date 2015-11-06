@@ -104,7 +104,7 @@ void change_nbr_index (int self_index, int old_nbr_index, int new_nbr_index, uno
     self_cluster->nbr_indices.insert(new_nbr_index);
 }
 
-void merge_cluster (ClusterPool& cluster_pool,
+bool merge_cluster (ClusterPool& cluster_pool,
                     EdgeQueue& edge_queue,
                     KeyEdgeMap& key_edges,
                     unordered_map<int, Cluster*>& id_clusters,
@@ -123,7 +123,7 @@ void merge_cluster (ClusterPool& cluster_pool,
     if (!cluster_pool.is_valid(cluster_index1) || !cluster_pool.is_valid(cluster_index2)) {
         assert(key_edges.erase(shortest_edge->edge_key) == 0);
         delete shortest_edge;
-        return;
+        return false;
     }
 
     cluster_pool.set_invalid(cluster_index1);
@@ -213,6 +213,7 @@ void merge_cluster (ClusterPool& cluster_pool,
     delete cluster1;
     delete cluster2;
     delete shortest_edge;
+    return true;
 }
 
 void print_clusters (const unordered_map<int, Cluster*>& id_clusters)
