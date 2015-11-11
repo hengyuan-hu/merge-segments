@@ -22,25 +22,25 @@ void print_edge_queue (EdgeQueue edge_queue, const ClusterPool& cp)
 }
 
 
-int main ()
+int main (int argc, const char* argv[])
 {
-    // const string seg_name = "meanshift(20,65_segm).png";
-    const string seg_name = "meanshift(15,15 100_segm)_segm.png";
-    const string angle_file_name = "newit10_angles.txt";
+    if (argc != 3) {
+        cout << "usage: segment seg_img_name angle_file_name" << endl;
+        return 0;
+    }
+    const string seg_name(argv[1]);
+    const string angle_file_name(argv[2]);
 
-    // for test
-    // const string seg_file_name = "test_cluster.txt";
-    // const string angle_file_name = "test_angle.txt";
     AngleGraph angle_graph = load_angle_graph(angle_file_name);
 
     int num_clusters;
     IndexCluster index_clusters = convert_color_cluster_to_index_cluster(seg_name, &num_clusters);
     cout << "number of clusters: " << num_clusters << endl;
-    save_index_cluster(seg_name+"_index_8_dir.txt", index_clusters);
 
+    // save_index_cluster(seg_name+"_index_8_dir.txt", index_clusters);
     // IndexCluster index_clusters = load_index_cluster(seg_name+"_index.txt");
 
-    save_cluster_graph(seg_name+"_original_8_dir.jpg", index_clusters);
+    save_cluster_graph(seg_name+"_original.jpg", index_clusters);
 
     unordered_map<int, Cluster*> id_clusters = construct_clusters (index_clusters);
     ClusterPool cluster_pool(id_clusters.size());
@@ -55,7 +55,7 @@ int main ()
     while (edge_queue.size()) {
         if(merge_cluster(cluster_pool, edge_queue, key_edges, id_clusters, index_clusters, angle_graph)) {
             i += 1;
-            if (i % 20 == 0) {
+            if (i % 2 == 0) {
                 string file_name = "result_pic/"+to_string(i)+"_merge.jpg";
                 save_cluster_graph(file_name, index_clusters);
                 cout << "iter: " << i << endl;
